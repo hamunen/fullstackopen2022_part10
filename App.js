@@ -2,6 +2,7 @@ import { StatusBar } from 'expo-status-bar'
 import { StyleSheet, Text, View } from 'react-native'
 
 export default function App() {
+  console.log('hello')
   return (
     <View style={styles.container}>
       <Text>Da da da di di di</Text>
