@@ -8,16 +8,18 @@ const styles = StyleSheet.create({
     borderRadius: 3,
     borderColor: 'gray',
     padding: 15,
-    margin: 7,
     textColor: theme.colors.textPrimary,
+  },
+  error: {
+    borderColor: theme.colors.error,
   },
 })
 
 // eslint-disable-next-line no-unused-vars
-const TextInput = ({ style, error, ...props }) => {
-  const textInputStyle = [style]
-
-  return <NativeTextInput style={[styles.input, textInputStyle]} {...props} />
+const TextInput = ({ error, ...props }) => {
+  return (
+    <NativeTextInput style={[styles.input, error && styles.error]} {...props} />
+  )
 }
 
 export default TextInput
