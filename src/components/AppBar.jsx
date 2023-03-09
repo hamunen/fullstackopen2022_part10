@@ -1,4 +1,4 @@
-import { View, StyleSheet } from 'react-native'
+import { View, StyleSheet, ScrollView } from 'react-native'
 import Constants from 'expo-constants'
 import theme from '../theme'
 import { SubHeading } from './Text'
@@ -21,12 +21,14 @@ const styles = StyleSheet.create({
 const AppBar = () => {
   return (
     <View style={styles.container}>
-      <Link to='/'>
-        <SubHeading style={styles.header}>Repositories</SubHeading>
-      </Link>
-      <Link to='/signin'>
-        <SubHeading style={styles.header}>Sign in</SubHeading>
-      </Link>
+      <ScrollView horizontal>
+        <Link to='/'>
+          <SubHeading style={styles.header}>Repositories</SubHeading>
+        </Link>
+        <Link to='/signin'>
+          <SubHeading style={styles.header}>Sign in</SubHeading>
+        </Link>
+      </ScrollView>
     </View>
   )
 }
