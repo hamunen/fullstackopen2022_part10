@@ -51,11 +51,12 @@ const SignInForm = ({ onSubmit }) => {
 const SignIn = () => {
   const [signIn] = useSignIn()
 
-  const onSubmit = async (values) => {
+  const onSubmit = async (values, { resetForm }) => {
     const { username, password } = values
     try {
       const { data } = await signIn({ username, password })
       console.log(data)
+      resetForm()
     } catch (e) {
       console.log(e)
     }
