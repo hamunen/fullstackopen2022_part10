@@ -1,8 +1,11 @@
-import { View, StyleSheet, ScrollView } from 'react-native'
+import { View, StyleSheet, ScrollView, Pressable } from 'react-native'
 import Constants from 'expo-constants'
 import theme from '../theme'
 import { SubHeading } from './Text'
 import { Link } from 'react-router-native'
+import { useQuery } from '@apollo/client'
+import { CURRENT_USER } from '../graphql/queries'
+import useSignOut from '../hooks/useSignOut'
 
 const styles = StyleSheet.create({
   container: {
@@ -19,15 +22,34 @@ const styles = StyleSheet.create({
 
 // Separate AppBarTab?
 const AppBar = () => {
+  const signOut = useSignOut()
+
+  const { data, error, loading } = useQuery(CURRENT_USER, {
+    fetchPolicy: 'cache-and-network',
+  })
+  if (error) console.log('Oh no, error: ', error)
+
+  const signInOrSignOut = () => {
+    if (data.me)
+      return (
+        <Pressable onPress={() => signOut()}>
+          <SubHeading style={styles.header}>Sign out</SubHeading>
+        </Pressable>
+      )
+    return (
+      <Link to='/signin'>
+        <SubHeading style={styles.header}>Sign in</SubHeading>
+      </Link>
+    )
+  }
+
   return (
     <View style={styles.container}>
       <ScrollView horizontal>
         <Link to='/'>
           <SubHeading style={styles.header}>Repositories</SubHeading>
         </Link>
-        <Link to='/signin'>
-          <SubHeading style={styles.header}>Sign in</SubHeading>
-        </Link>
+        {!loading && signInOrSignOut()}
       </ScrollView>
     </View>
   )

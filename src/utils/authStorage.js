@@ -9,7 +9,6 @@ class AuthStorage {
     await AsyncStorage.getItem(`${this.namespace}:accessToken`)
 
   setAccessToken = async (accessToken) => {
-    console.log('yep, setting the token now')
     return await AsyncStorage.setItem(
       `${this.namespace}:accessToken`,
       accessToken
