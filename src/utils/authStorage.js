@@ -8,8 +8,13 @@ class AuthStorage {
   getAccessToken = async () =>
     await AsyncStorage.getItem(`${this.namespace}:accessToken`)
 
-  setAccessToken = async (accessToken) =>
-    await AsyncStorage.setItem(`${this.namespace}:accessToken`, accessToken)
+  setAccessToken = async (accessToken) => {
+    console.log('yep, setting the token now')
+    return await AsyncStorage.setItem(
+      `${this.namespace}:accessToken`,
+      accessToken
+    )
+  }
 
   removeAccessToken = async () =>
     await AsyncStorage.removeItem(`${this.namespace}:accessToken`)
