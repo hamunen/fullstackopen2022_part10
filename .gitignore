@@ -14,3 +14,4 @@ web-build/
 .DS_Store
 
 react_native_debugger-0.13.0-setup.exe
+.env
