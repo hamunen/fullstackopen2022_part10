@@ -6,6 +6,7 @@ import { Route, Routes, Navigate, useMatch } from 'react-router-native'
 import SignIn from './SignIn'
 import RepositoryItemDetail from './RepositoryItem/RepositoryItemDetail'
 import Review from './Review'
+import SignUp from './SignUp'
 
 const styles = StyleSheet.create({
   container: {
@@ -31,6 +32,7 @@ const Main = () => {
           exact
         />
         <Route path='/signin' element={<SignIn />} exact />
+        <Route path='/signup' element={<SignUp />} exact />
         <Route path='*' element={<Navigate to='/' replace />} />
       </Routes>
     </View>

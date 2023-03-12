@@ -41,9 +41,14 @@ const AppBar = () => {
   )
 
   const signedOutView = () => (
-    <Link to='/signin'>
-      <SubHeading style={styles.header}>Sign in</SubHeading>
-    </Link>
+    <>
+      <Link to='/signin'>
+        <SubHeading style={styles.header}>Sign in</SubHeading>
+      </Link>
+      <Link to='/signup'>
+        <SubHeading style={styles.header}>Sign up</SubHeading>
+      </Link>
+    </>
   )
 
   return (
