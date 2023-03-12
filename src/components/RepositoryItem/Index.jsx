@@ -1,7 +1,8 @@
-import { View, StyleSheet, Image } from 'react-native'
+import { View, StyleSheet, Image, Pressable } from 'react-native'
 import theme from '../../theme'
 import Text, { SubHeading } from '../Text'
 import StatItem from './StatItem'
+import * as Linking from 'expo-linking'
 
 const styles = StyleSheet.create({
   container: {
@@ -50,9 +51,20 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-evenly',
   },
+  button: {
+    marginTop: 10,
+    marginHorizontal: 10,
+    backgroundColor: theme.colors.primary,
+    padding: 8,
+    borderRadius: '3%',
+  },
+  buttonText: {
+    color: 'white',
+    textAlign: 'center',
+  },
 })
 
-const RepositoryItem = ({ item }) => (
+const RepositoryItem = ({ item, url }) => (
   <View testID='repositoryItem' style={styles.container}>
     <View style={styles.topContainer}>
       <Image style={styles.avatar} source={{ uri: item.ownerAvatarUrl }} />
@@ -77,6 +89,15 @@ const RepositoryItem = ({ item }) => (
       <StatItem value={item.reviewCount} text={'Reviews'} />
       <StatItem value={item.ratingAverage} text={'Rating'} />
     </View>
+
+    {url && (
+      <Pressable
+        onPress={() => Linking.openURL(item.url)}
+        style={styles.button}
+      >
+        <Text style={styles.buttonText}>Open in GitHub</Text>
+      </Pressable>
+    )}
   </View>
 )
 

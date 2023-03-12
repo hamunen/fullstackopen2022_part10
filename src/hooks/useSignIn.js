@@ -9,9 +9,11 @@ const useSignIn = () => {
 
   const signIn = async ({ username, password }) => {
     const { data } = await authenticate({ variables: { username, password } })
-    await authStorage.setAccessToken(data.authenticate.accessToken)
-    apolloClient.resetStore()
-    console.log('signed in')
+    if (data?.authenticate) {
+      await authStorage.setAccessToken(data.authenticate.accessToken)
+      apolloClient.resetStore()
+      console.log('signed in')
+    }
   }
 
   return [signIn, result]
