@@ -29,19 +29,22 @@ const AppBar = () => {
   })
   if (error) console.log('Oh no, error: ', error)
 
-  const signInOrSignOut = () => {
-    if (data.me)
-      return (
-        <Pressable onPress={() => signOut()}>
-          <SubHeading style={styles.header}>Sign out</SubHeading>
-        </Pressable>
-      )
-    return (
-      <Link to='/signin'>
-        <SubHeading style={styles.header}>Sign in</SubHeading>
+  const signedInView = () => (
+    <>
+      <Link to='/createReview'>
+        <SubHeading style={styles.header}>Create a review</SubHeading>
       </Link>
-    )
-  }
+      <Pressable onPress={() => signOut()}>
+        <SubHeading style={styles.header}>Sign out</SubHeading>
+      </Pressable>
+    </>
+  )
+
+  const signedOutView = () => (
+    <Link to='/signin'>
+      <SubHeading style={styles.header}>Sign in</SubHeading>
+    </Link>
+  )
 
   return (
     <View style={styles.container}>
@@ -49,7 +52,8 @@ const AppBar = () => {
         <Link to='/'>
           <SubHeading style={styles.header}>Repositories</SubHeading>
         </Link>
-        {!loading && signInOrSignOut()}
+        {!loading && data.me && signedInView()}
+        {!loading && !data.me && signedOutView()}
       </ScrollView>
     </View>
   )

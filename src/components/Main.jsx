@@ -5,6 +5,7 @@ import RepositoryList from './RepositoryList'
 import { Route, Routes, Navigate, useMatch } from 'react-router-native'
 import SignIn from './SignIn'
 import RepositoryItemDetail from './RepositoryItem/RepositoryItemDetail'
+import Review from './Review'
 
 const styles = StyleSheet.create({
   container: {
@@ -23,6 +24,7 @@ const Main = () => {
       <AppBar />
       <Routes>
         <Route path='/' element={<RepositoryList />} exact />
+        <Route path='/createReview' element={<Review />} exact />
         <Route
           path='/repositories/:id'
           element={<RepositoryItemDetail id={repoId} />}
