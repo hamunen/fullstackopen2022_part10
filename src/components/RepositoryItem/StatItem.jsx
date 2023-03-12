@@ -15,7 +15,9 @@ const StatItem = ({ value, text }) => {
   return (
     <View>
       <SubHeading style={styles.stat}>{formattedValue}</SubHeading>
-      <Text style={styles.stat}>{text}</Text>
+      <Text color='textSecondary' style={styles.stat}>
+        {text}
+      </Text>
     </View>
   )
 }

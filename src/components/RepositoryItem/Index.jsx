@@ -73,7 +73,9 @@ const RepositoryItem = ({ item, url }) => (
           {item.fullName}
         </SubHeading>
         <View style={[styles.mainInfoContent, styles.descriptionContainer]}>
-          <Text style={styles.description}>{item.description}</Text>
+          <Text color='textSecondary' style={styles.description}>
+            {item.description}
+          </Text>
         </View>
         <View style={[styles.mainInfoContent, styles.languageContainer]}>
           <View style={styles.languageBox}>

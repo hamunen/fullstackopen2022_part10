@@ -18,18 +18,25 @@ export const GET_REPOSITORIES = gql`
 export const GET_REPOSITORY = gql`
   query Repository($id: ID!) {
     repository(id: $id) {
-      id
-      ownerAvatarUrl
-      fullName
-      description
-      language
-      stargazersCount
-      forksCount
-      reviewCount
-      ratingAverage
-      url
+      ...repositoryFields
+      reviews {
+        edges {
+          node {
+            id
+            text
+            rating
+            createdAt
+            user {
+              id
+              username
+            }
+          }
+        }
+      }
     }
   }
+
+  ${REPOSITORY_FIELDS}
 `
 
 export const CURRENT_USER = gql`
