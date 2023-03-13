@@ -32,6 +32,7 @@
     "react-native-shapes": "^0.1.0",
     "react-native-web": "~0.18.7",
     "react-router-native": "^6.8.2",
+    "use-debounce": "^9.0.3",
     "yup": "^1.0.2"
   },
   "jest": {

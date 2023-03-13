@@ -6,7 +6,7 @@ export const SORT_REPOSITORIES_LATEST = 'latest'
 export const SORT_REPOSITORIES_HIGHEST_RATED = 'highestRated'
 export const SORT_REPOSITORIES_LOWEST_RATED = 'lowestRated'
 
-const useRepositories = (sortOrder) => {
+const useRepositories = (sortOrder, searchKeyword) => {
   const orderBy =
     sortOrder === SORT_REPOSITORIES_LATEST ? 'CREATED_AT' : 'RATING_AVERAGE'
   const orderDirection =
@@ -14,7 +14,7 @@ const useRepositories = (sortOrder) => {
 
   const { data, error, loading } = useQuery(GET_REPOSITORIES, {
     fetchPolicy: 'cache-and-network',
-    variables: { orderBy, orderDirection },
+    variables: { orderBy, orderDirection, searchKeyword },
   })
 
   if (error) console.log(error)

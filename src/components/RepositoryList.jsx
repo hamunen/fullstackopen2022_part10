@@ -7,9 +7,11 @@ import useRepositories, {
 } from '../hooks/useRepositories'
 import { useNavigate } from 'react-router-native'
 import ItemSeparator from './common/ItemSeparator'
-import { useState } from 'react'
+import React, { useState } from 'react'
 import RNPickerSelect from 'react-native-picker-select'
 import { Chevron } from 'react-native-shapes'
+import { Searchbar } from 'react-native-paper'
+import { useDebouncedCallback } from 'use-debounce'
 
 const styles = StyleSheet.create({
   picker: {
@@ -21,7 +23,38 @@ const styles = StyleSheet.create({
   pickerContainer: {
     padding: 15,
   },
+  search: {
+    backgroundColor: 'white',
+    borderRadius: '3%',
+    marginTop: 10,
+    marginHorizontal: 10,
+    shadowColor: 'black',
+    shadowOffset: { width: 2, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 2,
+  },
 })
+
+const Search = ({ searchKeyword, setSearchKeyword }) => {
+  const [text, setText] = useState(searchKeyword)
+  const debounced = useDebouncedCallback((value) => {
+    setSearchKeyword(value)
+  }, 500)
+
+  const onChange = (value) => {
+    setText(value)
+    debounced(value)
+  }
+
+  return (
+    <Searchbar
+      placeholder='Search'
+      onChangeText={onChange}
+      value={text}
+      style={styles.search}
+    />
+  )
+}
 
 const SortOrderPicker = ({ sortOrder, setSortOrder }) => {
   return (
@@ -49,40 +82,58 @@ const SortOrderPicker = ({ sortOrder, setSortOrder }) => {
   )
 }
 
-export const RepositoryListContainer = ({
-  repositories,
-  sortOrder,
-  setSortOrder,
-}) => {
-  // not pure anymore?
-  const navigate = useNavigate()
+export class RepositoryListContainer extends React.Component {
+  renderHeader = () => {
+    const props = this.props
 
-  return (
-    <FlatList
-      data={repositories}
-      keyExtractor={(item) => item.id}
-      ItemSeparatorComponent={ItemSeparator}
-      renderItem={({ item }) => (
-        <Pressable onPress={() => navigate(`/repositories/${item.id}`)}>
-          <RepositoryItem item={item} />
-        </Pressable>
-      )}
-      ListHeaderComponent={() => (
-        <SortOrderPicker sortOrder={sortOrder} setSortOrder={setSortOrder} />
-      )}
-    />
-  )
+    return (
+      <>
+        <Search
+          searchKeyword={props.searchKeyword}
+          setSearchKeyword={props.setSearchKeyword}
+        />
+        <SortOrderPicker
+          sortOrder={props.sortOrder}
+          setSortOrder={props.setSortOrder}
+        />
+      </>
+    )
+  }
+
+  render() {
+    const props = this.props
+
+    return (
+      <FlatList
+        data={props.repositories}
+        keyExtractor={(item) => item.id}
+        ItemSeparatorComponent={ItemSeparator}
+        renderItem={({ item }) => (
+          <Pressable onPress={() => props.navigate(`/repositories/${item.id}`)}>
+            <RepositoryItem item={item} />
+          </Pressable>
+        )}
+        ListHeaderComponent={this.renderHeader}
+      />
+    )
+  }
 }
 
 const RepositoryList = () => {
   const [sortOrder, setSortOrder] = useState(SORT_REPOSITORIES_LATEST)
-  const { repositories } = useRepositories(sortOrder)
+  const [searchKeyword, setSearchKeyword] = useState('')
+
+  const { repositories } = useRepositories(sortOrder, searchKeyword)
+  const navigate = useNavigate()
 
   return (
     <RepositoryListContainer
       repositories={repositories}
       sortOrder={sortOrder}
       setSortOrder={setSortOrder}
+      searchKeyword={searchKeyword}
+      setSearchKeyword={setSearchKeyword}
+      navigate={navigate}
     />
   )
 }
