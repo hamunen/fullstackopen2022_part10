@@ -1,5 +1,4 @@
 import { useQuery } from '@apollo/client'
-
 import { GET_REPOSITORIES } from '../graphql/queries'
 
 export const SORT_REPOSITORIES_LATEST = 'latest'

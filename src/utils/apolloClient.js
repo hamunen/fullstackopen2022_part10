@@ -9,9 +9,14 @@ const httpLink = createHttpLink({
 
 const cache = new InMemoryCache({
   typePolicies: {
-    Query: {
+    AllRepositories: {
       fields: {
         repositories: relayStylePagination(),
+      },
+    },
+    Repository: {
+      fields: {
+        reviews: relayStylePagination(),
       },
     },
   },

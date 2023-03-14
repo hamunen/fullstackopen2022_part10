@@ -1,16 +1,17 @@
 import RepositoryItem from './Index'
 import Text from '../Text'
-import { useQuery } from '@apollo/client'
-import { GET_REPOSITORY } from '../../graphql/queries'
 import { FlatList } from 'react-native'
 import ReviewItem from '../ReviewItem'
 import ItemSeparator from '../common/ItemSeparator'
+import useRepository from '../../hooks/useRepository'
+
+const REVIEWS_FETCH_AMOUNT = 5
 
 const RepositoryItemDetail = ({ id }) => {
-  const { data, error, loading } = useQuery(GET_REPOSITORY, {
-    fetchPolicy: 'cache-and-network',
-    variables: { id },
-  })
+  const { data, error, loading, fetchMore } = useRepository(
+    id,
+    REVIEWS_FETCH_AMOUNT
+  )
 
   if (error) {
     console.log('oh no, error: ', error)
@@ -20,6 +21,10 @@ const RepositoryItemDetail = ({ id }) => {
 
   const repository = data.repository
   const reviews = repository.reviews.edges.map((e) => e.node)
+
+  const onEndReach = () => {
+    fetchMore()
+  }
 
   return (
     <FlatList
@@ -33,6 +38,8 @@ const RepositoryItemDetail = ({ id }) => {
         </>
       )}
       ItemSeparatorComponent={ItemSeparator}
+      onEndReached={onEndReach}
+      onEndReachedThreshold={0.2}
     />
   )
 }
