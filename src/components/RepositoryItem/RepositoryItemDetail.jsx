@@ -3,7 +3,7 @@ import Text from '../Text'
 import { useQuery } from '@apollo/client'
 import { GET_REPOSITORY } from '../../graphql/queries'
 import { FlatList } from 'react-native'
-import ReviewItem from './ReviewItem'
+import ReviewItem from '../ReviewItem'
 import ItemSeparator from '../common/ItemSeparator'
 
 const RepositoryItemDetail = ({ id }) => {

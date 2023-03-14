@@ -34,6 +34,9 @@ const AppBar = () => {
       <Link to='/createReview'>
         <SubHeading style={styles.header}>Create a review</SubHeading>
       </Link>
+      <Link to='/myReviews'>
+        <SubHeading style={styles.header}>My reviews</SubHeading>
+      </Link>
       <Pressable onPress={() => signOut()}>
         <SubHeading style={styles.header}>Sign out</SubHeading>
       </Pressable>
