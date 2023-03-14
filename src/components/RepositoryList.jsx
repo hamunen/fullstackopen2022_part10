@@ -13,6 +13,8 @@ import { Chevron } from 'react-native-shapes'
 import { Searchbar } from 'react-native-paper'
 import { useDebouncedCallback } from 'use-debounce'
 
+const REPOSITORIES_FETCH_AMOUNT = 5
+
 const styles = StyleSheet.create({
   picker: {
     iconContainer: {
@@ -114,6 +116,8 @@ export class RepositoryListContainer extends React.Component {
           </Pressable>
         )}
         ListHeaderComponent={this.renderHeader}
+        onEndReached={props.onEndReach}
+        onEndReachedThreshold={0.2}
       />
     )
   }
@@ -123,8 +127,16 @@ const RepositoryList = () => {
   const [sortOrder, setSortOrder] = useState(SORT_REPOSITORIES_LATEST)
   const [searchKeyword, setSearchKeyword] = useState('')
 
-  const { repositories } = useRepositories(sortOrder, searchKeyword)
+  const { repositories, fetchMore } = useRepositories(
+    sortOrder,
+    searchKeyword,
+    REPOSITORIES_FETCH_AMOUNT
+  )
   const navigate = useNavigate()
+
+  const onEndReach = () => {
+    fetchMore()
+  }
 
   return (
     <RepositoryListContainer
@@ -134,6 +146,7 @@ const RepositoryList = () => {
       searchKeyword={searchKeyword}
       setSearchKeyword={setSearchKeyword}
       navigate={navigate}
+      onEndReach={onEndReach}
     />
   )
 }
